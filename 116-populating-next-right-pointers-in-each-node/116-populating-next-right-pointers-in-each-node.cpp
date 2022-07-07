@@ -27,13 +27,8 @@ public:
             for(int i=0;i<n;i++){
                 auto p = q.front();
                 q.pop();
-                if(i==n-1){
-                    p->next=NULL;
-                    if(p->left){q.push(p->left);}
-                    if(p->right){q.push(p->right);}
-                    break;
-                }
-                p->next=q.front();
+                if(i==n-1)  p->next=NULL;
+                else p->next=q.front();        
                 if(p->left){q.push(p->left);}
                 if(p->right){q.push(p->right);}
             }
