@@ -11,28 +11,34 @@
  */
 class Solution {
 public:
-    
-    bool isValidBSTHelper (TreeNode* currentNode, TreeNode* min, TreeNode* max) {
-        if (currentNode==NULL) return true;               
-        if (min && currentNode->val <= min->val) return false;
-        if (max && currentNode->val >= max->val) return false;
-
-        return isValidBSTHelper (currentNode->left, min, currentNode) && isValidBSTHelper (currentNode->right, currentNode, max);
-    }
-    
+    TreeNode* prev=NULL;
     bool isValidBST(TreeNode* root) {
-        return isValidBSTHelper (root, NULL, NULL);
+        if(root==NULL) return true;
+        if(!isValidBST(root->left)){
+            return false;
+        }
+        if(prev!=NULL && root->val<=prev->val){
+            return false;
+        } 
+        prev=root;
+        return isValidBST(root->right);
     }
-//     bool check(TreeNode *root,long MIN,long MAX){
-//         if(root==NULL) return true;
-//         if(root->val<=MIN || root->val>=MAX) return false;
-        
-//         return (root->left,MIN,root->val)&&(root->right,root->val,MAX);
-//     }
-//     bool isValidBST(TreeNode* root) {
-//         return check(root,INT_MIN,INT_MAX);
+    
+    
+//     M-2
+//     bool isValidBSTHelper (TreeNode* currentNode, TreeNode* min, TreeNode* max) {
+//         if (currentNode==NULL) return true;               
+//         if (min && currentNode->val <= min->val) return false;
+//         if (max && currentNode->val >= max->val) return false;
+
+//         return isValidBSTHelper (currentNode->left, min, currentNode) && isValidBSTHelper (currentNode->right, currentNode, max);
 //     }
     
+//     bool isValidBST(TreeNode* root) {
+//         return isValidBSTHelper (root, NULL, NULL);
+//     }
+
+//     M-1
     // void inorder(TreeNode* root, vector<int>&ans){
     //     if(root==NULL) return;
     //     inorder(root->left,ans);
