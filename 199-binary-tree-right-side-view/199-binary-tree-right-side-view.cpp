@@ -11,21 +11,44 @@
  */
 class Solution {
 public:
+
+    
+    // Recursive function
+    void helper(TreeNode* root, vector<int> &ans, int i){
+        if(root == NULL) return;
+        
+        if(i == ans.size())
+            ans.push_back(root->val);
+        
+		// Right first DFS
+        helper(root->right, ans, i+1);
+        helper(root->left, ans, i+1);
+    }
+    
     vector<int> rightSideView(TreeNode* root) {
         vector<int> ans;
-        if(!root) return ans;
-        queue<TreeNode*> q;
-        q.push({root});
-        while(!q.empty()){
-            int n = q.size();
-            for(int i=0;i<n;i++){
-                auto p = q.front();
-                q.pop();
-                if(i==n-1) ans.push_back(p->val);
-                if(p->left) q.push(p->left);
-                if(p->right) q.push(p->right);
-            }
-        }
+        helper(root, ans, 0);
         return ans;
     }
+    
+    
+    
+    // Iterative Approach
+    // vector<int> rightSideView(TreeNode* root) {
+    //     vector<int> ans;
+    //     if(!root) return ans;
+    //     queue<TreeNode*> q;
+    //     q.push({root});
+    //     while(!q.empty()){
+    //         int n = q.size();
+    //         for(int i=0;i<n;i++){
+    //             auto p = q.front();
+    //             q.pop();
+    //             if(i==n-1) ans.push_back(p->val);
+    //             if(p->left) q.push(p->left);
+    //             if(p->right) q.push(p->right);
+    //         }
+    //     }
+    //     return ans;
+    // }
 };
