@@ -1,29 +1,17 @@
 class Solution {
-int a=0,b=0,c=0,d=0;
-bool solve(vector<int> &nums, int i){
+bool solve(vector<int> &nums, vector<int> &matchs, int i){
     if(i==nums.size()){
-        if(a==0 && b==0 && c==0 && d==0) return true;
-        else return false;
+        for(auto x:matchs){
+            if(x!=0) return false;
+        }
+        return true;
     }
-    if(a>=nums[i]){
-        a-=nums[i];
-        if(solve(nums,i+1)) return true;
-        a+=nums[i];
-    }
-    if(b>=nums[i]){
-        b-=nums[i];
-        if(solve(nums,i+1)) return true;
-        b+=nums[i];
-    }
-    if(c>=nums[i]){
-        c-=nums[i];
-        if(solve(nums,i+1)) return true;
-        c+=nums[i];
-    }
-    if(d>=nums[i]){
-        d-=nums[i];
-        if(solve(nums,i+1)) return true;
-        d+=nums[i];
+    for(int j=0;j<4;j++){
+        if(matchs[j]>=nums[i]){
+            matchs[j]-=nums[i];
+            if(solve(nums,matchs,i+1)) return true;
+            matchs[j]+=nums[i];
+        }
     }
     return false;
 }
@@ -33,8 +21,8 @@ public:
         for(auto x: matchsticks){sum+=x;}
         if(sum%4!=0) return false;
         int sumsize = sum / 4;
-        a=sumsize, b=sumsize, c=sumsize, d=sumsize;
+        vector<int> matchs(4,sumsize);
         sort(matchsticks.rbegin(), matchsticks.rend());
-        return solve(matchsticks,0);
+        return solve(matchsticks,matchs,0);
     }
 };
